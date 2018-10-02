@@ -3,7 +3,9 @@ package com.genix.tribalwarsnotifications
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.Service
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.support.v7.app.AppCompatActivity
@@ -15,7 +17,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val TAG = MainActivity::class.java.simpleName
+    private val TAG = "HMM"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         startNotificationService()
 
         btn_notify.setOnClickListener { sendNotification() }
+        btn_getNotifications.setOnClickListener { getNotifications() }
     }
 
     private fun sendNotification() {
@@ -69,12 +72,17 @@ class MainActivity : AppCompatActivity() {
             notManager.notify(12, notBuilder.build())
         }
 
-        Log.i(TAG, "Notification should be sent")
+        Log.d(TAG, "Notification should be sent")
+    }
+
+    private fun getNotifications() {
+
     }
 
     private fun startNotificationService() {
-//        val service = ListeningService()
+        startService(Intent(this, ListeningService::class.java))
     }
+
 
     private fun makeToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()

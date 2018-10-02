@@ -3,4 +3,5 @@
     <string name="service_name">ListeningService</string>
 
     <string name="btn_notify">Notify</string>
+    <string name="btn_getNotifications">Get notifications</string>
 </resources>
