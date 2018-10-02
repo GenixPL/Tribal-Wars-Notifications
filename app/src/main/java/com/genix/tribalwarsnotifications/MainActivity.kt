@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getNotifications() {
-
+        makeToast("empty method")
     }
 
     private fun startNotificationService() {
