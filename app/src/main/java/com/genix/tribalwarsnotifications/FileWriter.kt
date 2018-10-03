@@ -1,12 +1,19 @@
 package com.genix.tribalwarsnotifications
 
 import android.content.Context
+import android.util.Log
+import java.io.File
 
-class FileWriter(context: Context) {
-    private val FILE_NAME = "notifications.txt"
-    private var mContext = context
+class FileWriter {
 
-    public fun writeToFile(message: String) {
+    fun writeToFile(message: String) {
+//        File(App.NOT_FILE).writeText(message + "\n")
 
+        val file = File(App.getAppContext().filesDir, App.NOT_FILE)
+        App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_PRIVATE).use {
+            it.write(message.toByteArray())
+        }
+
+        Log.d(App.TAG, "new line should be added to file")
     }
 }
