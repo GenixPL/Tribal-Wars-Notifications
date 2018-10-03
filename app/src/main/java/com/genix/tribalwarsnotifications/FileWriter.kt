@@ -10,8 +10,8 @@ class FileWriter {
 //        File(App.NOT_FILE).writeText(message + "\n")
 
         val file = File(App.getAppContext().filesDir, App.NOT_FILE)
-        App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_PRIVATE).use {
-            it.write(message.toByteArray())
+        App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_APPEND).use {
+            it.write((message + "\n").toByteArray())
         }
 
         Log.d(App.TAG, "new line should be added to file")
