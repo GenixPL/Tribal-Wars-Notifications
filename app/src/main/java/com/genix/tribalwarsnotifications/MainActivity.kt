@@ -27,8 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         btn_notify.setOnClickListener { sendNotification() }
         btn_getNotifications.setOnClickListener { getNotifications() }
+        btn_askForPermissions.setOnClickListener { askForPermissions() }
     }
 
+    /* UI methods */
     private fun sendNotification() {
         val notManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -75,6 +77,10 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "Notification should be sent")
     }
 
+    private fun askForPermissions() {
+        startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+    }
+
     private fun getNotifications() {
         makeToast("empty method")
     }
@@ -84,6 +90,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    /* Other methods */
     private fun makeToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

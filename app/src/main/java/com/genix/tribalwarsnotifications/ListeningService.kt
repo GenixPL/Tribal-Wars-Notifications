@@ -7,6 +7,8 @@ import android.util.Log
 
 class ListeningService : NotificationListenerService() {
 
+    private val SharedWasLanuchedKey = "wasLaunched"
+
     override fun onCreate() {
         super.onCreate()
 
@@ -16,7 +18,12 @@ class ListeningService : NotificationListenerService() {
     private fun openAskActivity() {
         val prefs = App.getAppContext().getSharedPreferences(App.PREFS_FILE, 0)
 
-        startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+        if (!prefs.getBoolean(SharedWasLanuchedKey, false)) {
+            startActivity(Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"))
+
+            val prefsEditor = prefs.edit()
+            prefsEditor.putBoolean(SharedWasLanuchedKey, true).apply()
+        }
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
