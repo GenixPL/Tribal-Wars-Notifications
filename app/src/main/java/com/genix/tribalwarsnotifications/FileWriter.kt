@@ -6,14 +6,16 @@ import java.io.File
 
 class FileWriter {
 
-    fun writeToFile(message: String) {
+    companion object {
+        fun writeToFile(message: String) {
 //        File(App.NOT_FILE).writeText(message + "\n")
 
-        val file = File(App.getAppContext().filesDir, App.NOT_FILE)
-        App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_APPEND).use {
-            it.write((message + "\n").toByteArray())
-        }
+            val file = File(App.getAppContext().filesDir, App.NOT_FILE)
+            App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_APPEND).use {
+                it.write((message + "\n").toByteArray())
+            }
 
-        Log.d(App.TAG, "new line should be added to file")
+            Log.d(App.TAG, "new line should be added to file")
+        }
     }
 }

@@ -13,6 +13,7 @@ class ListeningService : NotificationListenerService() {
         super.onCreate()
 
         openAskActivity()
+        Log.d(App.TAG, "service started")
     }
 
     private fun openAskActivity() {
@@ -27,9 +28,9 @@ class ListeningService : NotificationListenerService() {
     }
 
     override fun onNotificationPosted(sbn: StatusBarNotification?) {
-
+        Log.d(App.TAG, getActiveNotifications().toString() + "SA")
         Log.i(App.TAG, "new notification: " + sbn.toString())
-        FileWriter().writeToFile(sbn.toString())
+        FileWriter.Companion.writeToFile(sbn.toString())
     }
 
     override fun onNotificationRemoved(sbn: StatusBarNotification?) {
@@ -40,5 +41,6 @@ class ListeningService : NotificationListenerService() {
     override fun onListenerConnected() {
         super.onListenerConnected()
         Log.i(App.TAG, "Listener connected")
+        Log.d(App.TAG, getActiveNotifications().toString() + "S")
     }
 }

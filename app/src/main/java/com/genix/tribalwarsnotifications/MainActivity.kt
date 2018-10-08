@@ -3,38 +3,52 @@ package com.genix.tribalwarsnotifications
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.app.Service
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.BufferedReader
+import java.io.File
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
     private val TAG = "HMM"
+    private lateinit var notManager:NotificationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        notManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         startNotificationService()
 
         btn_notify.setOnClickListener { sendNotification() }
         btn_getNotifications.setOnClickListener { getNotifications() }
         btn_askForPermissions.setOnClickListener { askForPermissions() }
+
+        val periodicRequest:PeriodicWorkRequest =
+                PeriodicWorkRequest.Builder(PeriodicWorker::class.java, PeriodicWorkRequest.MIN_PERIODIC_INTERVAL_MILLIS, TimeUnit.MILLISECONDS)
+                        .build()
+//        WorkManager.getInstance().enqueue(periodicRequest)
+        WorkManager.getInstance().
+                enqueueUniquePeriodicWork("checkEvery15min", ExistingPeriodicWorkPolicy.KEEP, periodicRequest)
     }
 
     /* UI methods */
     private fun sendNotification() {
-        val notManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        val NotificationChannel = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val notChannelId = "some_channel_id"
             val notChannelName:CharSequence = "some_channel_name"
             val notDescription = "some_channel_description"
@@ -82,7 +96,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getNotifications() {
-        makeToast("empty method")
+        var str = ""
+        var stringList = App.getAppContext().openFileInput(App.NOT_FILE).bufferedReader().readLines()
+        stringList.forEach { str += it + "\n\n" }
+        tx_notInfo.text = str
     }
 
     private fun startNotificationService() {
