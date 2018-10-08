@@ -7,7 +7,8 @@ public class App extends Application {
 
     private static Context APP_CONTEXT;
 
-    public static final String NOT_FILE = "notifications.txt";
+    public static final String FILE_NOTIFICATIONS = "notifications.txt";
+    public static final String FILE_WORKMANAGER_TIMES = "times.txt";
     public static final String TAG = "HMM";
     public static final String PREFS_FILE = "com.tribal.prefs";
 

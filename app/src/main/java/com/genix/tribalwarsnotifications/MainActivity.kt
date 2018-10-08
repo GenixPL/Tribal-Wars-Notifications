@@ -17,8 +17,6 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import kotlinx.android.synthetic.main.activity_main.*
-import java.io.BufferedReader
-import java.io.File
 import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
@@ -98,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun getNotifications() {
         var str = ""
-        var stringList = App.getAppContext().openFileInput(App.NOT_FILE).bufferedReader().readLines()
+        var stringList = App.getAppContext().openFileInput(App.FILE_WORKMANAGER_TIMES).bufferedReader().readLines()
         stringList.forEach { str += it + "\n\n" }
         tx_notInfo.text = str
         tx_notInfo.movementMethod = ScrollingMovementMethod()

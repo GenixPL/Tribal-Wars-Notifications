@@ -1,21 +1,25 @@
 package com.genix.tribalwarsnotifications
 
 import android.content.Context
-import android.util.Log
-import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 class FileWriter {
 
     companion object {
         fun writeToFile(message: String) {
-//        File(App.NOT_FILE).writeText(message + "\n")
-
-            val file = File(App.getAppContext().filesDir, App.NOT_FILE)
-            App.getAppContext().openFileOutput(App.NOT_FILE, Context.MODE_APPEND).use {
+            App.getAppContext().openFileOutput(App.FILE_NOTIFICATIONS, Context.MODE_APPEND).use {
                 it.write((message + "\n").toByteArray())
             }
+        }
 
-            Log.d(App.TAG, "new line should be added to file")
+        fun writeTime() {
+            val s = SimpleDateFormat("yyyy.MM.dd G 'at' HH:mm:ss z")
+            val format = s.format(Date())
+
+            App.getAppContext().openFileOutput(App.FILE_WORKMANAGER_TIMES, Context.MODE_APPEND).use {
+                it.write((format + "\n").toByteArray())
+            }
         }
     }
 }

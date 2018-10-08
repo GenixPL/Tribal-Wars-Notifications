@@ -1,5 +1,6 @@
 package com.genix.tribalwarsnotifications
 
+import android.content.Context
 import android.content.Intent
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
@@ -24,6 +25,10 @@ class ListeningService : NotificationListenerService() {
 
             val prefsEditor = prefs.edit()
             prefsEditor.putBoolean(SharedWasLanuchedKey, true).apply()
+
+            App.getAppContext().openFileOutput(App.FILE_WORKMANAGER_TIMES, Context.MODE_APPEND).use {
+                it.write("".toByteArray())
+            }
         }
     }
 
