@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.support.v7.app.AppCompatActivity
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.widget.Toast
 import androidx.work.ExistingPeriodicWorkPolicy
@@ -100,6 +101,7 @@ class MainActivity : AppCompatActivity() {
         var stringList = App.getAppContext().openFileInput(App.NOT_FILE).bufferedReader().readLines()
         stringList.forEach { str += it + "\n\n" }
         tx_notInfo.text = str
+        tx_notInfo.movementMethod = ScrollingMovementMethod()
     }
 
     private fun startNotificationService() {
